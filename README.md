@@ -21,6 +21,6 @@ It’s somewhat capable. Explore the **virtual file system** and use a variety o
 
 ## 💡 **Features of the Website**
 - **Virtual file system:** Navigate directories, create files, or delete everything if you’d like.
-- **JavaScript executables:** Treat `.js` files like executables and run them with `./`.
+- **JavaScript executables:** Treat files like executables and run them with `./` if they contain valid javascript code.
 - **Volatile memory:** Not really a feature tbh. if you refresh everything gets deleted, the flip side is if you break it through js scripting it can be reset easily.
 
