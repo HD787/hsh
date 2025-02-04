@@ -4,9 +4,9 @@ export function parseCommand(command: string): string {
   const parts: string[] = command.split(" ");
   const comm: string = parts[0];
   const params: string[] = parts.slice(1);
-  if(comm.includes("/")){
-    return execute(comm);
-  }
+  // if(comm.includes("/")){
+  //   return execute(comm);
+  // }
   //for a more real feel, if ur up to it, convert this to a hashmap and call it PATH
   switch (comm){
     case "":
@@ -29,13 +29,22 @@ export function parseCommand(command: string): string {
       return vim(params);
     case "cat":
       return cat(params);
+    case "node":
+      return execute(params);
+    case "bun":
+      return execute(params)
     default:
       return `hsh: command not found: ${comm}`
   }
 }
 
-function execute(file: string): string{
-  return "";
+function execute(params: string[]): string{
+  try {
+    const result = eval(params.join(" "));
+    return String(result ?? "");
+  } catch (e) {
+    return `Error: ${String(e)}`;  // Convert the error to a string
+  }
 }
 function clear(params: string[]): string {
   if(params.length !== 0) return `clear: expected 0 parameters got ${params.length}`;
