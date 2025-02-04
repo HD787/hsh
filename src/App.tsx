@@ -8,12 +8,14 @@ function App() {
   const file= useRef<string>(""); //this is just gonna be for vim i think
 
   const handleQuitVim = () => {
-    setCurrentView('terminal');  // Return to terminal when quitting Vim
+    setCurrentView('terminal');
   };
 
   return (
     <>
-      {currentView === 'terminal' && <TerminalComponent onOpenVim={(path) => {file.current = path; setCurrentView('vim');}} />}
+    <div style={{ display: currentView === 'terminal' ? 'block' : 'none' }}>
+      <TerminalComponent onOpenVim={(path) => {file.current = path; setCurrentView('vim');}}/>
+    </div>
       {currentView === 'vim' && <VimComponent onQuit={handleQuitVim} path={file.current} />}
     </>
   )
