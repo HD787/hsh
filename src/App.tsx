@@ -5,7 +5,7 @@ import VimComponent from './components/vim'
 
 function App() {
   const [currentView, setCurrentView] = useState<'terminal' | 'vim'>('terminal');
-  const file= useRef<string>("");
+  const file= useRef<string>(""); //this is just gonna be for vim i think
 
   const handleQuitVim = () => {
     setCurrentView('terminal');  // Return to terminal when quitting Vim

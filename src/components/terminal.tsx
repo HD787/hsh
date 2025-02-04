@@ -64,7 +64,7 @@ const TerminalComponent: React.FC<TerminalProps> = ({onOpenVim}) => {
     if(result !== "" ){
       if(result[0] === '\0'){
         if(result === "\0 break"){ terminal.current.clear();}
-        // if(result.includes("\0 vim")){ onOpenVim(result.split(" ")[2]); }
+        if(result.includes("\0 vim")){ onOpenVim(result.split(" ")[2]); }
         else prompt.current = `guest@Henrys-Website ${currDir.name} % `;
       }
       else terminal.current.write("\r\n" + result);
