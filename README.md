@@ -20,13 +20,7 @@ It’s somewhat capable. Explore the **virtual file system** and use a variety o
 | `./path-to-file`         | —                               | Executes the JavaScript file as if it were a script.                                       |
 
 ## 💡 **Features of the Website**
-- **Fully destructible:** This environment is meant to be broken and explored.
 - **Virtual file system:** Navigate directories, create files, or delete everything if you’d like.
 - **JavaScript executables:** Treat `.js` files like executables and run them with `./`.
-  
----
+- **Volatile memory:** Not really a feature if you refresh everything you have done will be gone, the flip side is if you break it through js scripting it can be reset easily.
 
-## ⚠️ **Important Notes:**
-- **Recursive delete (`rm`):** By default, directories and files are deleted recursively. No confirmation dialogs here—so be cautious.
-- **Running JavaScript:** Use `node` or `bun` to execute code. Be warned—it can break things (refresh to reset)!
-- **Fun chaos:** Go ahead and try `rm -rf /` or other destructive commands. You can always refresh and start over!
