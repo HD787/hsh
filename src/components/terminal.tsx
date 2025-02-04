@@ -3,10 +3,11 @@ import { Terminal } from '@xterm/xterm'
 import { WebLinksAddon } from '@xterm/addon-web-links';
 import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css';
+import './terminal.css'
 import { parseCommand } from '../backend/commandParser';
 import { currDir } from '../backend/virtualFileSystem';
-
 import { getCommand, movePointer, pushCommand, resetPointer } from '../utils/commandStack';
+import { preLoad } from '../utils/preload';
 
 type TerminalProps = {
   onOpenVim: (path: string) => void;
@@ -25,10 +26,14 @@ const TerminalComponent: React.FC<TerminalProps> = ({onOpenVim}) => {
       terminal.current.open(terminalRef.current);
       terminal.current.loadAddon(new WebLinksAddon());
       terminal.current.loadAddon(new FitAddon());
-      
-      fitAddon.fit();
-      terminal.current.write('Welcome to the terminal!\r\n');
+      fitAddon.activate(terminal.current)
+      fitAddon.fit()
+
+
+      terminal.current.write('hey, run \'cat readme\' for help\r\n');
       terminal.current.write(prompt.current);
+      preLoad();
+
     }
     const input = terminal.current.onData((data) => {
       handleUserInput(data);
@@ -59,7 +64,7 @@ const TerminalComponent: React.FC<TerminalProps> = ({onOpenVim}) => {
     if(result !== "" ){
       if(result[0] === '\0'){
         if(result === "\0 break"){ terminal.current.clear();}
-        if(result.includes("\0 vim")){ onOpenVim(result.split(" ")[2]); }
+        // if(result.includes("\0 vim")){ onOpenVim(result.split(" ")[2]); }
         else prompt.current = `guest@Henrys-Website ${currDir.name} % `;
       }
       else terminal.current.write("\r\n" + result);
@@ -92,7 +97,7 @@ const TerminalComponent: React.FC<TerminalProps> = ({onOpenVim}) => {
     return;
   }
 
-  return <div ref={terminalRef}/>;
+  return <div ref={terminalRef} id="terminal"/>;
 };
 
 export default TerminalComponent; 
