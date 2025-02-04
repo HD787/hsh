@@ -4,8 +4,6 @@ It’s somewhat capable. Explore the **virtual file system** and use a variety o
 ---
 
 ## 🚀 **Available Commands:**
-
-```
 | Command                  | Parameters                     | Description                                                                                 |
 |-------------------------|---------------------------------|---------------------------------------------------------------------------------------------|
 | `clear`                  | —                               | Clears the terminal screen.                                                                |
@@ -20,10 +18,6 @@ It’s somewhat capable. Explore the **virtual file system** and use a variety o
 | `node`                   | `string`                        | Runs the provided string as JavaScript. **Warning:** This can break the website, which is fine—I just think you should know. |
 | `bun`                    | `string`                        | Same as `node`.                                                                            |
 | `./path-to-file`         | —                               | Executes the JavaScript file as if it were a script.                                       |
-```
-
-
-
 
 ## 💡 **Features of the Website**
 - **Fully destructible:** This environment is meant to be broken and explored.
