@@ -19,3 +19,7 @@ there is a virtual file system and a variety of commands are supported
 `vim name`: Probably not implemented yet but maybe it is, idk.
 
 `cat path`: outputs the contents of a file.
+
+`node string`: runs the provided code as javascript. NOTE: this can break the website, which is fine I just think you should know.
+
+`bun string`: same thing as node.
