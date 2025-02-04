@@ -9,8 +9,8 @@ body, html {
 #terminal {
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
-  color: #333333;
+  background-color: #ffffff !important; 
+  color: #333333 !important;
   padding: 0px;
   font-family: 'Fira Code', 'Courier New', monospace;
   box-sizing: border-box;
