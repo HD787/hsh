@@ -1,12 +1,12 @@
-import { changeDirectory, CreateDirectory, CreateFile, deleteChild, listChildren, readFile } from "./virtualFileSystem";
+import { changeDirectory, CreateDirectory, CreateFile, deleteChild, listChildren, readFile, runExecutable } from "./virtualFileSystem";
 
 export function parseCommand(command: string): string {
   const parts: string[] = command.split(" ");
   const comm: string = parts[0];
   const params: string[] = parts.slice(1);
-  // if(comm.includes("/")){
-  //   return execute(comm);
-  // }
+  if(comm.includes("/")){
+    return executePath(comm);
+  }
   //for a more real feel, if ur up to it, convert this to a hashmap and call it PATH
   switch (comm){
     case "":
@@ -43,9 +43,14 @@ function execute(params: string[]): string{
     const result = eval(params.join(" "));
     return String(result ?? "");
   } catch (e) {
-    return `Error: ${String(e)}`;  // Convert the error to a string
+    return `Error: ${String(e)}`;
   }
 }
+
+function executePath(path: string): string{
+  return runExecutable(path);
+}
+
 function clear(params: string[]): string {
   if(params.length !== 0) return `clear: expected 0 parameters got ${params.length}`;
   return "\0 clear"

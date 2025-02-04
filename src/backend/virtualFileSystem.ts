@@ -106,6 +106,49 @@ export function CreateFile({path, content}: {path: string, content?: string}): s
   return "";
 }
 
+export function runExecutable(path: string): string{
+  path = path.slice(2);
+  const directions = path.split("/");
+  if(directions.length === 1){
+    const foundFile = currDir.children.find(
+      (child) => child.name === path && child.kind === "file"
+    ) as File
+    if(!foundFile) return `hsh: no such file or directory: ${path}`;
+    try {
+      const result = eval(foundFile.content);
+      return String(result ?? "");
+    } catch (e) {
+      return `Error: ${String(e)}`;
+    }
+  }
+
+  const file = directions.pop() ?? ""
+  let tempDir = currDir
+  for(const d of directions){
+    if(d === ".."){
+      if(!tempDir.parent) return `cat: ${directions.join('/')}: no such file or directory`
+      tempDir = tempDir.parent;
+      continue;
+    }
+    if(d === ".") continue;
+    const foundDir = currDir.children.find(
+      (child) => child.name === d && child.kind === "directory"
+    ) as Directory;
+    if(!foundDir) return `cat: ${directions.join('/')}: no such file or directory`;
+    tempDir = foundDir
+  }
+  
+  const foundFile = tempDir.children.find(
+    (child) => child.name === file && child.kind === "file"
+  ) as File
+  try {
+    const result = eval(foundFile.content);
+    return String(result ?? "");
+  } catch (e) {
+    return `Error: ${String(e)}`;
+  }
+}
+
 export function readFile(path: string): string{
   const directions = path.split("/");
   if(directions.length === 1){

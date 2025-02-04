@@ -20,6 +20,6 @@ there is a virtual file system and a variety of commands are supported
 
 `cat path`: outputs the contents of a file.
 
-`node string`: runs the provided code as javascript. NOTE: this can break the website, which is fine I just think you should know.
+`node string`: runs the provided string as javascript. NOTE: this can break the website, which is fine I just think you should know.
 
 `bun string`: same thing as node.
