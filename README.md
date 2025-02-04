@@ -13,7 +13,7 @@ It’s somewhat capable. Explore the **virtual file system** and use a variety o
 | `rm`                     | `name`                          | Deletes the specified file or directory. **Recursive by default.**                         |
 | `touch`                  | `name`, `content (optional)`    | Creates a file with the specified name and optional content. **Escaped characters supported.** |
 | `echo`                   | `string`                        | Prints the given string to the terminal.                                                   |
-| `vim`                    | `name`                          | Probably not implemented yet, but maybe I got around to it and forgot to change this idk?                                  |
+| `vim`                    | `name`                          | Opens a minimal text editor in another window that vaguely resembles Vim, use esc to save and leave.                                  |
 | `cat`                    | `path`                          | Outputs the contents of a file.                                                            |
 | `node`                   | `string`                        | Runs the provided string as JavaScript. **Warning:** This can break the website, which is fine—I just think you should know. |
 | `bun`                    | `string`                        | Same as `node`.                                                                            |
