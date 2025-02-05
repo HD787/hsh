@@ -1,4 +1,6 @@
+import { blockingHttpRequest } from "../utils/blockingHttpRequest";
 import { changeDirectory, CreateDirectory, CreateFile, deleteChild, listChildren, readFile, runExecutable } from "./virtualFileSystem";
+import { format } from "../utils/formatter";
 
 export function parseCommand(command: string): string {
   const parts: string[] = command.split(" ");
@@ -33,6 +35,8 @@ export function parseCommand(command: string): string {
       return execute(params);
     case "bun":
       return execute(params)
+    case "curl":
+      return curl(params);
     default:
       return `hsh: command not found: ${comm}`
   }
@@ -77,7 +81,7 @@ function rm(params: string[]): string {
 }
 
 function touch(params: string[]): string {
-  if(params.length === 0) return `touch: expected at least 1 parameter got ${params.length}`
+  if(params.length === 0) return `touch: expected at least 1 parameter got ${params.length}`;
   return CreateFile({path: params[0], content: params.slice(1).join(" ")});
 }
 
@@ -86,15 +90,21 @@ function vim(params: string[]):string{
   //return  a \0 telling the front end to call vim
   //maybe pass the filename
   //vim will then save the content to the file upon leaving
-  if(params.length !== 1) return `vim: expected 1 parameter got ${params.length}`
+  if(params.length !== 1) return `vim: expected 1 parameter got ${params.length}`;
   return `\0 vim ${params[0]}`
 }
 
 function cat(params: string[]): string{
-  if(params.length !== 1) return `cat: expected 1 parameter got ${params.length}`
+  if(params.length !== 1) return `cat: expected 1 parameter got ${params.length}`;
   return readFile(params[0]);
 }
 
 function echo(params: string[]): string {
   return params.join(" ");
+}
+
+function curl(params: string[]){
+  if(params.length !== 1) return `curl: expected 1 parameter got ${params.length}`;
+  // console.log(format(JSON.stringify(blockingHttpRequest(params[0])));
+  return format(JSON.stringify((blockingHttpRequest(params[0]))));
 }

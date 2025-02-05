@@ -1,4 +1,4 @@
-
+import { format } from "../utils/formatter";
 
 type Directory = {
   kind: "directory";
@@ -63,14 +63,7 @@ export function CreateDirectory(path: string): string{
 
 export function CreateFile({path, content}: {path: string, content?: string}): string{
   content = content ?? ""
-  content = content
-  .replace(/\\n/g, '\n\r')
-  .replace(/\\t/g, '\t')
-  .replace(/\\\\/g, '\\')
-  .replace(/\\'/g, "'")
-  .replace(/\\"/g, '"')
-  .replace(/\\r/g, '\r')
-  .replace(/\\b/g, '\b') ?? "";
+  content = format(content);
 
   const directions = path.split("/");
   if(directions.length === 1){
