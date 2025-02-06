@@ -4,6 +4,7 @@ export function createTerminal(): Terminal{
   return new Terminal({
     cursorBlink: true,
     fontSize: 18,
+    fontFamily: "'Cascadia Code', monospace",
     theme: {
       background: "#f5f5f5",
       foreground: "#4a4a4a",

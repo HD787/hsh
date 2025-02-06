@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef} from 'react';
 import { Terminal } from '@xterm/xterm'
 import { WebLinksAddon } from '@xterm/addon-web-links';
 import { FitAddon } from '@xterm/addon-fit'

@@ -69,6 +69,18 @@ const VimComponent: React.FC<VimProps> = ({onQuit, path}) => {
       vim.current.write('\b \b');
       inputBuffer.current = inputBuffer.current.slice(0, -1);
     }
+    else if(inputBuffer.current.length > 0){
+      let lastNewLine = inputBuffer.current.lastIndexOf("\n");
+      let secondToLastNewLine = inputBuffer.current.slice(0, -1).lastIndexOf("\n");
+      if(lastNewLine === -1){ 
+        vim.current.write("\x1b[A" + "\x1b[C".repeat(inputBuffer.current.length - 1))
+        inputBuffer.current = inputBuffer.current.slice(0, -1);
+        return;
+      }
+      const diff = lastNewLine - secondToLastNewLine;
+      vim.current.write("\x1b[A" + "\x1b[C".repeat(diff - 1))
+      inputBuffer.current = inputBuffer.current.slice(0, -1);
+    }
     return;
   }
   function renderStyle() {
