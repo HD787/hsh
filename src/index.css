@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Cascadia Code';
-  src: url('/fonts/woff2/CascadiaCode.woff2') format('woff2');
+  src: url('/fonts/woff2/static/CascadiaCode.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }

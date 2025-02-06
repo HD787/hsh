@@ -13,12 +13,6 @@ function App() {
 
   return (
     <>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></link>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap" rel="stylesheet"></link>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet"></link>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet"></link>
-
-
     <div style={{ display: currentView === 'terminal' ? 'block' : 'none' }}>
       <TerminalComponent onOpenVim={(path) => {file.current = path; setCurrentView('vim');}}/>
     </div>

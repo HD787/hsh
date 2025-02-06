@@ -5,6 +5,8 @@ export function createTerminal(): Terminal{
     cursorBlink: true,
     fontSize: 18,
     fontFamily: "'Cascadia Code', monospace",
+    fontWeight: "normal",
+    fontWeightBold: "bold",
     theme: {
       background: "#f5f5f5",
       foreground: "#4a4a4a",
