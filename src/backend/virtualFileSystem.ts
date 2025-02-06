@@ -29,6 +29,7 @@ export function getCurrentDirectory(): Directory{
 export function CreateDirectory(path: string): string{
   const directions = path.split("/");
   if(directions.length === 1){
+    if(currDir.children.some(child => child.name === path)) return `mkdir: ${path}: Directory exists`
     currDir.children.push({
       kind: "directory",
       name: path,
@@ -41,7 +42,7 @@ export function CreateDirectory(path: string): string{
   let tempDir = currDir
   for(const d of directions){
     if(d === ".."){
-      if(!tempDir.parent) return `cd: not a directory: ${directions.join('/')}`
+      if(!tempDir.parent) return `mkdir: not a directory: ${directions.join('/')}`
       tempDir = tempDir.parent;
       continue;
     }
@@ -49,9 +50,10 @@ export function CreateDirectory(path: string): string{
     const foundDir = currDir.children.find(
       (child) => child.name === d && child.kind === "directory"
     ) as Directory;
-    if(!foundDir) return `cd: not a directory: ${directions.join('/')}`;
+    if(!foundDir) return `mkdir: not a directory: ${directions.join('/')}`;
     tempDir = foundDir
   }
+  if(tempDir.children.some(child => child.name === newDir)) return `mkdir: ${path}: Directory exists`
   tempDir.children.push({
     kind: "directory",
     name: newDir,
@@ -61,12 +63,16 @@ export function CreateDirectory(path: string): string{
   return "";
 }
 
-export function CreateFile({path, content}: {path: string, content?: string}): string{
+export function CreateFile({path, content, overwrite}: {path: string, content?: string, overwrite?: boolean}): string{
   content = content ?? ""
   content = format(content);
-
+  
   const directions = path.split("/");
   if(directions.length === 1){
+    const existingFile = currDir.children.find(child => child.name === path);
+    if(existingFile && !overwrite) return `touch: ${path}: File exists`;
+    if(existingFile && existingFile.kind === "directory") return `touch: ${path}: File exists`;
+    if(existingFile && existingFile.kind === "file"){ existingFile.content = content ?? ""; return ""; }
     currDir.children.push({
       kind: "file",
       name: path,
@@ -79,7 +85,7 @@ export function CreateFile({path, content}: {path: string, content?: string}): s
   let tempDir = currDir
   for(const d of directions){
     if(d === ".."){
-      if(!tempDir.parent) return `cd: not a directory: ${directions.join('/')}`
+      if(!tempDir.parent) return `touch: not a directory: ${directions.join('/')}`
       tempDir = tempDir.parent;
       continue;
     }
@@ -87,9 +93,13 @@ export function CreateFile({path, content}: {path: string, content?: string}): s
     const foundDir = currDir.children.find(
       (child) => child.name === d && child.kind === "directory"
     ) as Directory;
-    if(!foundDir) return `cd: not a directory: ${directions.join('/')}`;
+    if(!foundDir) return `touch: not a directory: ${directions.join('/')}`;
     tempDir = foundDir
   }
+  const existingFile = tempDir.children.find(child => child.name === newFile);
+  if(existingFile && !overwrite) return `touch: ${path}: File exists`;
+  if(existingFile && existingFile.kind === "directory") return `touch: ${path}: File exists`;
+  if(existingFile && existingFile.kind === "file"){ existingFile.content = content ?? ""; return ""; }
   tempDir.children.push({
     kind: "file",
     name: newFile,
@@ -238,4 +248,36 @@ export function listChildren(dir: string): string{
   let files: string[] = [];
   tempDir.children?.map((child) => files.push(child.name));
   return files.join("\r\n");
+}
+
+//this is a vim exclusive use cat in terminal
+export function openFile(path: string): string{
+  const directions = path.split("/");
+  if(directions.length === 1){
+    const existingFile = currDir.children.find(child => child.name === path && child.kind === "file") as File;
+    if(existingFile){
+      return existingFile.content;
+    }
+    else{CreateFile({path}); return "";}
+  }
+  const target: string = directions.pop() ?? '';
+  let tempDir = currDir
+  for(const d of directions){
+    if(d === ".."){
+      if(!tempDir.parent) return `rm: not a file or directory: ${currDir.name}/${path}`
+      tempDir = tempDir.parent;
+      continue;
+    }
+    if(d === ".") continue;
+    const foundDir = tempDir.children.find(
+      (child) => child.name === d && child.kind === "directory"
+    ) as Directory;
+    if(!foundDir) return `rm: not a file or directory: ${currDir.name}/${path}`;
+    tempDir = foundDir
+  }
+  const existingFile = currDir.children.find(child => child.name === target && child.kind === "file") as File;
+  if(existingFile){
+    return existingFile.content;
+  }
+  else{CreateFile({path}); return "";}
 }

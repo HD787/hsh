@@ -1,10 +1,20 @@
 export function blockingHttpRequest(url: string): string {
   const xhr = new XMLHttpRequest();
-  let result = '';
+  let result: string = '';
+  const timeoutMs = 2000;
+
+  const timer = setTimeout(() => {
+    if (xhr.readyState !== 4) {
+      xhr.abort();
+      result = `curl: Timed out after ${timeoutMs} ms`;
+    }
+  }, timeoutMs);
 
   try {
     xhr.open('GET', url, false);
     xhr.send();
+
+    clearTimeout(timer);
 
     if (xhr.status >= 200 && xhr.status < 300) {
       result = xhr.responseText;

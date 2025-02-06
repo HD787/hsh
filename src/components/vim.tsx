@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Terminal } from '@xterm/xterm'
 import { WebLinksAddon } from '@xterm/addon-web-links';
 import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css';
-import { CreateFile } from '../backend/virtualFileSystem';
+import { CreateFile, openFile } from '../backend/virtualFileSystem';
+import { createTerminal } from '../utils/createTerminal';
 
 type VimProps = {
   onQuit: () => void;
@@ -12,7 +13,7 @@ type VimProps = {
 
 const VimComponent: React.FC<VimProps> = ({onQuit, path}) => {
   const vimRef = useRef<HTMLDivElement>(null);
-  const vim = useRef<Terminal>(new Terminal());
+  const vim = useRef<Terminal>(createTerminal());
   const fitAddon = new FitAddon();
   let inputBuffer = useRef('');
   
@@ -23,7 +24,11 @@ const VimComponent: React.FC<VimProps> = ({onQuit, path}) => {
       vim.current.loadAddon(new FitAddon());
       fitAddon.activate(vim.current)
       fitAddon.fit()
+      inputBuffer.current = openFile(path);
+      console.log(inputBuffer.current);
       renderStyle()
+      vim.current.write(inputBuffer.current.replace(/\n/g, "\r\n\x1b[1C"));
+      
     }
     const input = vim.current.onData((data) => {
       handleUserInput(data);
@@ -37,6 +42,10 @@ const VimComponent: React.FC<VimProps> = ({onQuit, path}) => {
     '\x7f': handleBackspace,
     '\x1b': handleEscape, 
     '\r': handleReturn,
+    '\x1b[A': handleArrowKey,
+    '\x1b[B': handleArrowKey,
+    '\x1b[C': handleArrowKey,
+    '\x1b[D': handleArrowKey,
   };
 
   const handleUserInput = (data: string) => {
@@ -46,8 +55,9 @@ const VimComponent: React.FC<VimProps> = ({onQuit, path}) => {
       inputBuffer.current += data;
     }
   };
+  function handleArrowKey(){;}//this simplifies things for now
   function handleEscape(){
-    CreateFile({path: path, content: inputBuffer.current})
+    CreateFile({path: path, content: inputBuffer.current, overwrite: true})
     onQuit();
   }
   function handleReturn(){
@@ -64,7 +74,7 @@ const VimComponent: React.FC<VimProps> = ({onQuit, path}) => {
   function renderStyle() {
     vim.current.clear();
     for (let i = 0; i < 1000; i++) {
-      vim.current.write(`~\r\n`);
+      vim.current.write(` \b~\r\n`);
     }
     vim.current.write(`\x1b[${1};${2}H`);
     vim.current.focus();

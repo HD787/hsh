@@ -8,6 +8,7 @@ import { parseCommand } from '../backend/commandParser';
 import { currDir } from '../backend/virtualFileSystem';
 import { getCommand, movePointer, pushCommand, resetPointer } from '../utils/commandStack';
 import { preLoad } from '../utils/preload';
+import { createTerminal } from '../utils/createTerminal';
 
 type TerminalProps = {
   onOpenVim: (path: string) => void;
@@ -16,7 +17,7 @@ type TerminalProps = {
 const TerminalComponent: React.FC<TerminalProps> = ({onOpenVim}) => {
 
   const terminalRef = useRef<HTMLDivElement>(null);
-  const terminal = useRef<Terminal>(new Terminal());
+  const terminal = useRef<Terminal>(createTerminal());
   const fitAddon = new FitAddon();
   const prompt = useRef<string>(`guest@Henrys-Website ${currDir.name} % `)
   let inputBuffer = useRef('');

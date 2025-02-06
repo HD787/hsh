@@ -105,6 +105,5 @@ function echo(params: string[]): string {
 
 function curl(params: string[]){
   if(params.length !== 1) return `curl: expected 1 parameter got ${params.length}`;
-  // console.log(format(JSON.stringify(blockingHttpRequest(params[0])));
-  return format(JSON.stringify((blockingHttpRequest(params[0]))));
+  return format(blockingHttpRequest(params[0]));
 }
