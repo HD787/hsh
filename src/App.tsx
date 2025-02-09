@@ -13,7 +13,8 @@ function App() {
 
   return (
     <>
-    {/* <link href="https://cdn.jsdelivr.net/gh/microsoft/cascadia-code@latest/webfonts/cascadia-code.css" rel="stylesheet"></link> */}
+    <link href="https://fonts.cdnfonts.com/css/cascadia-code" rel="stylesheet"></link>
+                
 
     <div style={{ display: currentView === 'terminal' ? 'block' : 'none' }}>
       <TerminalComponent onOpenVim={(path) => {file.current = path; setCurrentView('vim');}}/>
