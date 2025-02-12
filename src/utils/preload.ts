@@ -33,13 +33,20 @@ const readme = {
 const github = {
   "kind": "file",
   "parent": rootDir,
-  "name": "github",
+  "name": "viewGithub.exe",
   "content": "window.open('https://github.com/hd787', '_blank');"
+}
+
+const repo = {
+  "kind": "file",
+  "parent": rootDir,
+  "name": "viewSourceCode.exe",
+  "content": "window.open('https://github.com/hd787/hsh', '_blank');"
 }
 
 
 export function preLoad(){
   CreateFile({path: "readme", content:readme.content})
-  //can we display links if they contain /, currently no, maybe time for a symlink data type
-  CreateFile({path: "https://github.com/hd787", content:github.content});
+  CreateFile({path: github.name, content:github.content});
+  CreateFile({path: repo.name, content:repo.content})
 }
