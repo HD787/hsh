@@ -44,9 +44,17 @@ const repo = {
   "content": "window.open('https://github.com/hd787/hsh', '_blank');"
 }
 
+const graphicsEngine = {
+  "kind": "file",
+  "parent": rootDir,
+  "name": "graphicsEngine.js",
+  "content": "// Graphics engine project - a web app I made a while ago, written in pure C code\r\nwindow.location.href = '/graphicsEngine';"
+}
+
 
 export function preLoad(){
   CreateFile({path: "readme", content:readme.content})
   CreateFile({path: github.name, content:github.content});
   CreateFile({path: repo.name, content:repo.content})
+  CreateFile({path: graphicsEngine.name, content:graphicsEngine.content})
 }
