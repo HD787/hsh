@@ -48,7 +48,7 @@ const graphicsEngine = {
   "kind": "file",
   "parent": rootDir,
   "name": "graphicsEngine.js",
-  "content": "// Graphics engine project - a web app I made a while ago, written in pure C code\r\nwindow.location.href = '/graphicsEngine';"
+  "content": "// Graphics engine project - a web app I made a while ago, written in pure C code\r\nwindow.location.href = '/graphicsEngine/';"
 }
 
 
