@@ -33,14 +33,14 @@ const readme = {
 const github = {
   "kind": "file",
   "parent": rootDir,
-  "name": "viewGithub.exe",
+  "name": "viewGithub.js",
   "content": "window.open('https://github.com/hd787', '_blank');"
 }
 
 const repo = {
   "kind": "file",
   "parent": rootDir,
-  "name": "viewSourceCode.exe",
+  "name": "viewSourceCode.js",
   "content": "window.open('https://github.com/hd787/hsh', '_blank');"
 }
 
